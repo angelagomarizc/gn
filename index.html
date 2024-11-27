@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleep Date?</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            transition: opacity 0.5s ease;
+        }
+
+        .screen.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        img {
+            max-width: 250px;
+            max-height: 250px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 10px;
+            transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-yes {
+            background-color: #FFD700;
+            color: black;
+        }
+
+        .btn-yes:hover {
+            background-color: #FFEE99;
+            box-shadow: 0 0 20px #FFD700;
+        }
+
+        .btn-yes:active {
+            transform: scale(1.1);
+        }
+
+        .btn-no {
+            background-color: red;
+            color: white;
+        }
+
+        .btn-no:hover {
+            background-color: #FF6666;
+        }
+    </style>
+</head>
+<body>
+    <!-- Primera pantalla -->
+    <div class="screen active" id="screen1">
+        <img src="boo-scared.jpg" alt="Boo asustada">
+        <h1>Sleep Date?</h1>
+        <div>
+            <button class="btn btn-yes" onclick="showScreen('screen2')">Sí</button>
+            <button class="btn btn-no" id="noBtn">No</button>
+        </div>
+    </div>
+
+    <!-- Segunda pantalla -->
+    <div class="screen" id="screen2">
+        <img src="boo-tired.jpg" alt="Boo cansada">
+        <h1>Hoy??</h1>
+        <div>
+            <button class="btn btn-yes" id="yesFollowBtn" onclick="showScreen('screen3')">Vale</button>
+            <button class="btn btn-no" id="noFollowBtn">Mejor no</button>
+        </div>
+    </div>
+
+    <!-- Tercera pantalla -->
+    <div class="screen" id="screen3">
+        <h1>Sabía que aceptarías, te espero!!</h1>
+        <img src="good-night-ori.jpg" alt="Good night Ori">
+        <img src="cuddling-cats.jpg" alt="Gatitos en la cama">
+    </div>
+
+    <script>
+        function showScreen(screenId) {
+            const screens = document.querySelectorAll('.screen');
+            screens.forEach(screen => screen.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        // Movimiento del botón "No" en la primera pantalla
+        const noBtn = document.getElementById('noBtn');
+        noBtn.addEventListener('mouseenter', () => {
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+        });
+
+        // Crecimiento del botón "Vale" en la segunda pantalla
+        const noFollowBtn = document.getElementById('noFollowBtn');
+        const yesFollowBtn = document.getElementById('yesFollowBtn');
+        let buttonSize = 1; // Tamaño inicial
+        noFollowBtn.addEventListener('click', () => {
+            buttonSize += 0.1;
+            yesFollowBtn.style.transform = `scale(${buttonSize})`;
+        });
+    </script>
+</body>
+</html>
